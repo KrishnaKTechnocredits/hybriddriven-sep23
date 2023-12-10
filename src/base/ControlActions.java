@@ -1,6 +1,8 @@
 package base;
 
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,6 +16,7 @@ public abstract class ControlActions {
 	
 	protected static WebDriver driver;
 	private static PropOperations propOperations;
+	private static WebDriverWait wait;
 	
 	static public void launchBrowser() {
 		propOperations = new PropOperations(ConstantPath.DEV_ENV_FILEPATH);
@@ -21,6 +24,7 @@ public abstract class ControlActions {
 		driver = new ChromeDriver();
 		driver.get(propOperations.getValue("url"));
 		driver.manage().window().maximize();
+		wait = new WebDriverWait(driver, ConstantPath.WAIT);
 	}
 	
 	protected void setText() {
@@ -32,7 +36,6 @@ public abstract class ControlActions {
 	}
 	
 	protected WebElement getElement(String locatorType, String locatorValue, boolean isWaitRequired) {
-		WebDriverWait wait = new WebDriverWait(driver,30);
 		WebElement e = null;
 		switch(locatorType.toUpperCase()) {
 			case "XPATH":
@@ -96,5 +99,49 @@ public abstract class ControlActions {
 		}
 		
 		return e;
+	}
+	
+	protected void waitForElementToBeVisible(WebElement e) {
+		wait.until(ExpectedConditions.visibilityOf(e));
+	}
+	
+	protected void waitForElementToBeClickable(WebElement e) {
+		wait.until(ExpectedConditions.elementToBeClickable(e));
+	}
+	
+	protected void waitForElementToBeInvisible(WebElement e) {
+		WebDriverWait wait = new WebDriverWait(driver, ConstantPath.FAST_WAIT);
+		wait.until(ExpectedConditions.invisibilityOf(e));
+	}
+	
+	protected boolean isElementDisplayed(WebElement e) {
+		try {
+			return e.isDisplayed();
+		}catch(NoSuchElementException ne) {
+			return false;
+		}
+	}
+	
+	protected boolean isElementDisplayedWithWait(WebElement e) {
+		try {
+			wait.until(ExpectedConditions.visibilityOf(e));
+			return true;
+		}catch(NoSuchElementException ne) {
+			return false;
+		}
+	}
+	
+	protected boolean isElementDisplayedWithWait(WebElement e, int timeout) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, timeout);
+			wait.until(ExpectedConditions.visibilityOf(e));
+			return true;
+		}catch(Exception ne) {
+			return false;
+		}
+	}
+	
+	protected String getCurrentURL() {
+		return driver.getCurrentUrl();
 	}
 }
