@@ -3,6 +3,7 @@ package testscripts;
 import java.io.IOException;
 
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -12,20 +13,14 @@ import base.ControlActions;
 import pages.LoginPage;
 import utility.ExcelOperations;
 
-public class LoginTest {
-	LoginPage loginPage;
-
-	@BeforeMethod
-	public void setup() {
-		ControlActions.launchBrowser();
-		loginPage = new LoginPage();
-	}
+public class LoginTest extends TestBase{
 	
 	@Test
 	public void verifyLogin() {
-		loginPage.login("harshhpatel07@gmail.com", "Hhv@123456");
+		loginPage.login("harshhpatel07@gmail.com", "Hhv@1234568");
 		boolean loginFlag = loginPage.isLoginSuccessFullyDisplayed();
 		Assert.assertTrue(loginFlag);
+		System.out.println("END - Verify login");
 	}
 	
 	@Test
@@ -109,10 +104,5 @@ public class LoginTest {
 	@DataProvider(name="LoginDataProvider")
 	public Object[][] getLoginData() throws IOException{
 		return ExcelOperations.getAllRows(".//testData/LoginData.xlsx", "Login");
-	}
-	
-	@AfterMethod
-	public void tearDown() {
-		ControlActions.closeBrowser();
 	}
 }
