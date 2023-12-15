@@ -1,5 +1,6 @@
 package testscripts;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -24,5 +25,11 @@ public class TestBase {
 		if(ITestResult.FAILURE == result.getStatus())
 			ControlActions.takeScreenshot(result.getName() + "_"+ count++);
 		ControlActions.closeBrowser();
+	}
+	
+	void login() {
+		loginPage.login("harshhpatel07@gmail.com", "Hhv@123456");
+		boolean loginFlag = loginPage.isLoginSuccessFullyDisplayed();
+		Assert.assertTrue(loginFlag);
 	}
 }

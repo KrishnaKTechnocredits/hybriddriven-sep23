@@ -3,6 +3,8 @@ package base;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -157,6 +159,13 @@ public abstract class ControlActions {
 		}
 	}
 	
+	protected List<String> getElementTextList(List<WebElement> listOfWebElements){
+		List<String> listOfElementText = new ArrayList<String>();
+		for(WebElement element : listOfWebElements) {
+			listOfElementText.add(element.getText());
+		}
+		return listOfElementText;
+	}
 	
 	protected String getCurrentURL() {
 		return driver.getCurrentUrl();
