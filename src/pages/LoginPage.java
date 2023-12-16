@@ -40,7 +40,7 @@ public class LoginPage extends ControlActions {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void login(String email, String password) {
+	public DashboardPage login(String email, String password) {
 
 		/*
 		 * System.out.println("STEP: Entered Email address"); //1.
@@ -63,7 +63,7 @@ public class LoginPage extends ControlActions {
 		 * //driver.findElement(By.xpath("//input[@id='login']")).click();
 		 * loginBtnElement.click();
 		 */
-		clickOnLoginBtn();
+		return clickOnLoginBtn();
 	}
 
 	public void enterUserEmail(String email) {
@@ -79,9 +79,10 @@ public class LoginPage extends ControlActions {
 		userPasswordElement.sendKeys(password);
 	}
 
-	public void clickOnLoginBtn() {
+	public DashboardPage clickOnLoginBtn() {
 		System.out.println("STEP : Click on Login Button");
 		loginBtnElement.click();
+		return new DashboardPage();
 	}
 
 	public boolean isLoginSuccessFullyDisplayed() {

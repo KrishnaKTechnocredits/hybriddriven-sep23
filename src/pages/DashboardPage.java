@@ -19,8 +19,20 @@ public class DashboardPage extends ControlActions{
 	@FindBy(xpath = "//section//h6[text()='Search For']//following-sibling::div[contains(@class,'form-group')]/label")
 	List<WebElement> searchForElementList;
 	
+	@FindBy(xpath = "(//label[text()='mobiles'])[2]/preceding-sibling::input")
+	WebElement mobileCheckboxElement;
+	
+	@FindBy(xpath = "//div[@class='card']")
+	List<WebElement> listOfCards;
+
+	@FindBy(xpath = "//button[@class='btn btn-custom'  and contains(text(),'Cart')]")
+	WebElement cartMenu; 
+	
+	private CartPage cartPage;
+	
 	public DashboardPage() {
 		PageFactory.initElements(driver, this);
+		cartPage = new CartPage();
 	}
 	
 	public int getTotalNumberItemsInCategories() {
@@ -63,5 +75,35 @@ public class DashboardPage extends ControlActions{
 		 * return searchForItemTextList;
 		 */
 		return getElementTextList(searchForElementList);
+	}
+	
+	
+	public void selectOptionItem(String itemName) {
+		//String locator = "(//label[text()='"+itemName+"'])[2]/preceding-sibling::input";
+		String locatorValue = String.format("(//label[text()='%s'])[2]/preceding-sibling::input", itemName);
+		//WebElement e = getElement("XPATH", locatorValue, true);
+		clickOnElement("XPATH", locatorValue, true);
+	}
+	
+	public boolean isOptionItemSelected(String itemName) {
+		String locatorValue = String.format("(//label[text()='%s'])[2]/preceding-sibling::input", itemName);
+		return getElement("XPATH",locatorValue,false).isSelected();
+	}
+	
+	public int getTotalNumberOfVisibleCards() {
+		return listOfCards.size();
+	}
+	
+	public void addToCart(String productName) {
+		productName = productName.toLowerCase();
+		String locator = 
+				String.format("//b[text()='%s']/parent::h5/following-sibling::button[contains(text(),' Add To Cart')]",productName);
+	
+		clickOnElement("XPATH", locator, false);
+	}
+	
+	public CartPage clickOnCartMenu() {
+		clickOnElement(cartMenu, false);
+		return cartPage;
 	}
 }

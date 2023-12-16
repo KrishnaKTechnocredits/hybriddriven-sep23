@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import pages.DashboardPage;
 
 public class DashboardTest extends TestBase{
-	DashboardPage dashboardPage;
 	
 	@Test
 	public void verifyItemListInSideFilterOptions() {
@@ -18,7 +17,6 @@ public class DashboardTest extends TestBase{
 			= new ArrayList<String>(Arrays.asList("fashion","electronics","household"));
 		
 		login();
-		dashboardPage = new DashboardPage();
 		System.out.println("STEP - Get Total number of Items in categories");
 		int actualCatoriesItemSize = dashboardPage.getTotalNumberItemsInCategories();
 		
@@ -43,6 +41,18 @@ public class DashboardTest extends TestBase{
 		Assert.assertEquals(actualSearchForItemSize, 2);
 	}
 	
-	
-	
+	@Test
+	public void verifyFilterTest() {
+		login();
+		System.out.println("STEP - user select the eletronics check box under Categories");
+		dashboardPage.selectOptionItem("electronics");
+		
+		System.out.println("VERIFY - Option item is selected");
+		boolean optionItemSelectedFlag = dashboardPage.isOptionItemSelected("electronics");
+		Assert.assertTrue(optionItemSelectedFlag);
+		
+		System.out.println("VERIFY - Options are visible as per applied filter");
+		int totalCards = dashboardPage.getTotalNumberOfVisibleCards();
+		Assert.assertEquals(totalCards, 1);
+	}
 }
