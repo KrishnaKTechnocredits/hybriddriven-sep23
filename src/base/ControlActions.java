@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -119,7 +120,13 @@ public abstract class ControlActions {
 	
 	protected void waitForElementToBeInvisible(WebElement e) {
 		WebDriverWait wait = new WebDriverWait(driver, ConstantPath.FAST_WAIT);
-		wait.until(ExpectedConditions.invisibilityOf(e));
+		try {
+			wait.until(ExpectedConditions.invisibilityOf(e));
+		}catch(NoSuchElementException ne) {
+			System.out.println(ne.getMessage());
+		}catch(TimeoutException te) {
+			System.out.println(te.getMessage());
+		}
 	}
 	
 	protected boolean isElementDisplayed(WebElement e) {
@@ -184,6 +191,12 @@ public abstract class ControlActions {
 	}
 	
 	protected void clickOnElement(WebElement element, boolean isWaitRequired) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
 	}
 	

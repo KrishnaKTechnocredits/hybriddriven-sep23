@@ -28,6 +28,12 @@ public class DashboardPage extends ControlActions{
 	@FindBy(xpath = "//button[@class='btn btn-custom'  and contains(text(),'Cart')]")
 	WebElement cartMenu; 
 	
+	@FindBy(xpath = "//div[contains(@class, 'la-ball-scale-multiple ng-star-inserted')]")
+	WebElement spinnerElement;
+	
+	@FindBy(xpath = "//button[@class='btn btn-custom' and contains(text(),'Sign Out')]")
+	WebElement logoutElement;
+	
 	private CartPage cartPage;
 	
 	public DashboardPage() {
@@ -99,11 +105,19 @@ public class DashboardPage extends ControlActions{
 		String locator = 
 				String.format("//b[text()='%s']/parent::h5/following-sibling::button[contains(text(),' Add To Cart')]",productName);
 	
-		clickOnElement("XPATH", locator, false);
+		clickOnElement("XPATH", locator, true);
+	}
+	
+	public void waitForSpinnerToBeDisappear() {
+		waitForElementToBeInvisible(spinnerElement);
 	}
 	
 	public CartPage clickOnCartMenu() {
-		clickOnElement(cartMenu, false);
+		clickOnElement(cartMenu, true);
 		return cartPage;
+	}
+	
+	public void clickOnLogOut() {
+		clickOnElement(logoutElement, false);
 	}
 }

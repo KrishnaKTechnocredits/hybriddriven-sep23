@@ -7,5 +7,7 @@ public class ConstantPath {
 	public final static String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
 	public final static String CHROME_DRIVER_VALUE = ".//chromeDriver/chromedriver.exe";
 	public final static int WAIT = 30;
-	public final static int FAST_WAIT = 5;
+	public final static int FAST_WAIT = 3;
+	
+	public final static String LOGIN_WORKBOOK_PATH = ".//testData/LoginData.xlsx";
 }

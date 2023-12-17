@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import constants.ConstantPath;
 import utility.ExcelOperations;
 
 public class LoginTest extends TestBase{
@@ -98,6 +99,6 @@ public class LoginTest extends TestBase{
 	
 	@DataProvider(name="LoginDataProvider")
 	public Object[][] getLoginData() throws IOException{
-		return ExcelOperations.getAllRows(".//testData/LoginData.xlsx", "Login");
+		return ExcelOperations.getAllRows(ConstantPath.LOGIN_WORKBOOK_PATH, "Login");
 	}
 }

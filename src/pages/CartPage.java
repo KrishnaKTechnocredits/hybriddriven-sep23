@@ -14,6 +14,9 @@ public class CartPage extends ControlActions{
 	@FindBy(xpath = "//div[@class='cart']/ul")
 	List<WebElement> listOfProduct;
 	
+	@FindBy(xpath = "//div[@class='cart']/ul//h3")
+	List<WebElement> listOfProductName;
+	
 	@FindBy(xpath = "//button[@class='btn btn-danger']")
 	List<WebElement> listOfDeleteBtn;
 	
@@ -23,8 +26,15 @@ public class CartPage extends ControlActions{
 	@FindBy(xpath = "//button[contains(text(),'Cart')]/label")
 	WebElement cartMenuProductCount;
 	
+	@FindBy(xpath = "//h1[text()='My Cart']")
+	WebElement myCartHeader;
+	
 	public CartPage(){
 		PageFactory.initElements(driver, this);
+	}
+	
+	public void waitForCartPageLoad() {
+		waitForElementToBeVisible(myCartHeader);
 	}
 	
 	public int getTotalNumberOfProductsInMyCart() {
@@ -36,7 +46,8 @@ public class CartPage extends ControlActions{
 	}
 	
 	public boolean isProductAvailableInMyCart(String productName) {
-		return getElementTextList(listOfProduct).contains(productName);
+		System.out.println(getElementTextList(listOfProductName));
+		return getElementTextList(listOfProductName).contains(productName);
 	}
 	
 	public boolean isProductDisplayedAtTheEndOfList(String productName) {

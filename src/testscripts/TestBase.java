@@ -24,7 +24,6 @@ public class TestBase {
 	
 	@AfterMethod
 	public void tearDown(ITestResult result) {
-		System.out.println("--------------" + result.getStatus());
 		if(ITestResult.FAILURE == result.getStatus())
 			ControlActions.takeScreenshot(result.getName() + "_"+ count++);
 		ControlActions.closeBrowser();
